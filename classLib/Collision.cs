@@ -39,7 +39,7 @@ public class Collision
     }
     public void CollisionAdd(Item item, ref Item[] items, ref int count)
     {
-        while (items[index].status != 0 && flag != 0)
+        while (items[index].status != 0 && flag != 0 && j <= this.size)
         {
             // Ячейка занята
             if (items[index].status == 1)
@@ -72,21 +72,26 @@ public class Collision
         }
         if (flag == 1)
         {
-            Item item_1 = new Item(item.key, item.value);
+            Item item_1 = new Item(item.key, item.value, hash);
+
+            item_1.k = j - 1;
+
             items[index] = item_1;
             count++;
+
         }
-        if (flag == 2)
+        if (flag == 2 || j == this.size)
         {
-            Item item_1 = new Item(item.key, item.value);
+            Item item_1 = new Item(item.key, item.value, hash);
+            item_1.k = j - 2;
             items[hash_2] = item_1;
             count++;
         }
 
     }
-    public int CollisionSearch(Key key, Item[] items)
+    public string CollisionSearch(int key, Item[] items)
     {
-        while (items[index].status != 0 && flag == 1)
+        while (items[index].status != 0 && flag == 1 && j <= this.size)
         {
             if (key == items[index].key)
             {
@@ -105,18 +110,25 @@ public class Collision
         }
         else
         {
-            return -1;
+            return "No";
         }
     }
 
-    public void CollisionRemove(Key key, ref Item[] items, ref int count)
+    public void CollisionRemove(int key, string value, ref Item[] items, ref int count)
     {
-        while (items[index].status != 0 && flag == 1)
+        while (items[index].status != 0 && flag == 1 && j <= this.size)
         {
             if (key == items[index].key)
             {
-                flag = 0;
-                hash_2 = index;
+                if (value == items[index].value)
+                {
+                    flag = 0;
+                    hash_2 = index;
+                }
+                else
+                {
+                    flag = 2;
+                }
             }
             else
             {

@@ -14,15 +14,38 @@ internal class Program
 
         Key key;
 
-        var table = new HachTable(11);
+        var table = new HachTable(10);
+        table.Add(0, "Толя");
+        table.Remove(0, "Толя");
+        table.Add(1, "Толя");
+        table.Remove(1, "Толя");
+        table.Add(2, "Петя");
+        table.Remove(2, "Петя");
+        table.Add(3, "Вася");
+        table.Remove(3, "Вася");
+        table.Add(4, "Толя");
+        table.Remove(4, "Толя");
+        table.Add(5, "Толя");
+        table.Remove(5, "Толя");
+        table.Add(6, "Петя");
+        table.Remove(6, "Петя");
+        table.Add(7, "Вася");
+        table.Remove(7, "Вася");
+        table.Add(8, "Вася");
+        table.Remove(8, "Вася");
+        table.Add(9, "Вася");
+        table.Remove(9, "Вася");
+        table.Add(9, "Вася");
 
-        void output(string key1, string key2)
-        {
-            key = new Key(key1, key2);
-            int index = table.Search(key);
-            Console.WriteLine($"{data[index].date} {data[index].name} {data[index].route} {data[index].nameCapitan}");
+        table.Print();
 
-        }
+        // void output(string key1, string key2)
+        // {
+        //     key = new Key(key1, key2);
+        //     int index = table.Search(key);
+        //     Console.WriteLine($"{data[index].date} {data[index].name} {data[index].route} {data[index].nameCapitan}");
+
+        // }
 
 
         // for (int j = 0; j < size; j++)
@@ -32,21 +55,6 @@ internal class Program
         // }
 
         // output("Clarence King", "BN69049");
-        Key key1 = new Key("MAA", "N");
-        Key key2 = new Key("MNA", "A");
-        Key key3 = new Key("ANA", "M");
-        Key key4 = new Key("AAN", "M");
-        Key key5 = new Key("NAA", "M");
-        table.Add(key1, 1);
-        table.Add(key2, 2);
-        table.Add(key3, 3);
-        table.Add(key4, 4);
-        table.Remove(key1);
-        table.Remove(key3);
-        table.Remove(key4);
-        table.Remove(key2);
-        table.Remove(key1);
-        table.Print();
 
 
     }

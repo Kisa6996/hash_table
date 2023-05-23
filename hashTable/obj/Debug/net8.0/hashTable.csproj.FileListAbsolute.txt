@@ -31,3 +31,4 @@ C:\Users\nikit\cProject\hashTable\obj\Debug\net8.0\refint\hashTable.dll
 C:\Users\nikit\cProject\hashTable\obj\Debug\net8.0\hashTable.pdb
 C:\Users\nikit\cProject\hashTable\obj\Debug\net8.0\hashTable.genruntimeconfig.cache
 C:\Users\nikit\cProject\hashTable\obj\Debug\net8.0\ref\hashTable.dll
+C:\Users\nikit\cProject\hashTable\obj\Debug\net8.0\hashTable.sourcelink.json

@@ -1,19 +1,25 @@
     public struct Item
     {
-        public Key key;
-        public int value;
+        public int key;
+        public string value;
         public int status;
 
-        public Item(Key key, int value)
+        public int hash1;
+
+        public int k;
+
+        public Item(int key, string value, int hash)
         {
+            this.k = 0;
+            this.hash1 = hash;
             this.key = key;
             this.value = value;
             this.status = 1;
         }
-        public Item(Key key)
+        public Item(int key)
         {
-            this.key = null;
-            this.value = 0;
+            this.key = 0;
+            this.value = "";
             this.status = 2;
         }
     };

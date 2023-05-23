@@ -10,3 +10,4 @@ C:\Users\nikit\cProject\classLib\obj\Debug\net8.0\classLib.dll
 C:\Users\nikit\cProject\classLib\obj\Debug\net8.0\refint\classLib.dll
 C:\Users\nikit\cProject\classLib\obj\Debug\net8.0\classLib.pdb
 C:\Users\nikit\cProject\classLib\obj\Debug\net8.0\ref\classLib.dll
+C:\Users\nikit\cProject\classLib\obj\Debug\net8.0\classLib.sourcelink.json

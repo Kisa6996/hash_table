@@ -16,53 +16,43 @@ public class HachTable
         this.initial_size = size;
 
     }
-    public void Remove(Key key)
+    public void Remove(int key, string value)
     {
+        bool flag = true;
         int hash = HachOne(key);
         Item item = new Item(key);
         if (key == items[hash].key)
         {
-            items[hash] = item;
-            this.count--;
+            if (value == items[hash].value)
+            {
+                items[hash] = item;
+                this.count--;
+            }
+            else
+            {
+                flag = false;
+            }
+
         }
         else
         {
-            Collision collision = new Collision(hash, size);
-            collision.CollisionRemove(key, ref items, ref count);
+            if (flag)
+            {
+                Collision collision = new Collision(hash, size);
+                collision.CollisionRemove(key, value, ref items, ref count);
+            }
 
         }
         float capacity = (float)count / size;
         if (capacity < 0.25 && initial_size < size)
         {
-            this.size = this.size / 2;
-            Item[] arr = new Item[size];
-            for (int j = 0; j < size * 2; j++)
-            {
-                if (items[j].status == 1)
-                {
-                    hash = HachOne(items[j].key);
-                    if (arr[hash].status == 0)
-                    {
-                        item = new Item(items[j].key, items[j].value);
-                        arr[hash] = item;
-                        count++;
-                    }
-                    else
-                    {
-                        Collision collision = new Collision(hash, size);
-                        collision.CollisionAdd(item, ref arr, ref count);
-                    }
-                }
-            }
-            items = new Item[size];
-            Array.Copy(arr, items, items.Length);
-
+            Increase(item,"remove");
         }
     }
-    public void Add(Key key, int value)
+    public void Add(int key, string value)
     {
-        Item item = new Item(key, value);
         int hash = HachOne(key);
+        Item item = new Item(key, value, hash);
         if (items[hash].status == 0)
         {
             items[hash] = item;
@@ -76,33 +66,10 @@ public class HachTable
         float capacity = (float)count / size;
         if (capacity > 0.75)
         {
-            count = 0;
-            this.size = this.size * 2;
-            Item[] arr = new Item[size];
-            for (int j = 0; j < size / 2; j++)
-            {
-                if (items[j].status == 1)
-                {
-                    hash = HachOne(items[j].key);
-                    if (arr[hash].status == 0)
-                    {
-                        item = new Item(items[j].key, items[j].value);
-                        arr[hash] = item;
-                        count++;
-                    }
-                    else
-                    {
-                        Collision collision = new Collision(hash, size);
-                        collision.CollisionAdd(item, ref arr, ref count);
-                    }
-                }
-            }
-            items = new Item[size];
-            Array.Copy(arr, items, items.Length);
-
+            Increase(item,"add");
         }
     }
-    public int Search(Key key)
+    public string Search(int key)
     {
         int hash = HachOne(key);
         if (key == items[hash].key)
@@ -121,7 +88,7 @@ public class HachTable
         {
             if (items[j].status == 1)
             {
-                Console.WriteLine($"{j}|{items[j].key.key1} {items[j].key.key2} => {items[j].value} |{items[j].status}");
+                Console.WriteLine($"{j}|{items[j].key} => {items[j].value} |{items[j].status}|hash={items[j].hash1}|шаг={items[j].k} ");
             }
             else
             {
@@ -131,15 +98,51 @@ public class HachTable
         }
 
     }
-    private int HachOne(Key key)
+    private int HachOne(int key)
     {
-        string str = key.key1 + key.key2;
-        int i = 0;
-        for (int j = 0; j < str.Length; j++)
-            i += str[j];
+        // string str = key.key1 + key.key2;
+        // int i = 0;
+        // for (int j = 0; j < str.Length; j++)
+        //     i += str[j];
 
-        return i % this.size;
+        return key % this.size;
 
     }
+    private void Increase(Item item, string now)
+    {
+        int p;
+        count = 0;
+        if (now == "add")
+        {
+            this.size = this.size * 2;
+            p = size / 2;
+        }
+        else
+        {
+            this.size = this.size / 2;
+            p = size * 2;
+        }
+        Item[] arr = new Item[size];
+        for (int j = 0; j < p; j++)
+        {
+            if (items[j].status == 1)
+            {
+                int hash = HachOne(items[j].key);
+                if (arr[hash].status == 0)
+                {
+                    item = new Item(items[j].key, items[j].value, hash);
+                    arr[hash] = item;
+                    count++;
+                }
+                else
+                {
+                    Collision collision = new Collision(hash, size);
+                    collision.CollisionAdd(item, ref arr, ref count);
+                }
+            }
+        }
+        items = new Item[size];
+        Array.Copy(arr, items, items.Length);
 
+    }
 }
